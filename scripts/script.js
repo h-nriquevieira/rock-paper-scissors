@@ -24,6 +24,7 @@ Create function for rounds checking
     Check if user score is >= 3
     User wins
     If anyone wins, return information to end game
+    If rounds = 6, compare score and declare winner or tie
 
 Create loop to play game
     Run round
@@ -33,14 +34,21 @@ Create loop to play game
 
 let computerPlay;
 let userPlay;
-let computerScore;
-let userScore;
+let computerScore = 0;
+let userScore = 0;
 let currentRound = 1;
 let keepGoing = true;
 
 function playRound() {
-
+    let roundWinner;
+    
     generateComputerPlay();
+    getUserPlay();
+    comparePlays();
+    displayWinner();
+    updateScore();
+    displayRoundInfo();
+    currentRound += 1;
 }
 
 // For plays: 1 is rock, 2 is paper, 3 is scissors
@@ -67,4 +75,77 @@ function getUserPlay() {
         getUserPlay();
     }
   
+}
+
+function comparePlays() {
+    if (computerPlay === "rock") {
+        switch (userPlay) {
+            case "rock":
+                roundWinner = "tie";
+                break;
+            case "paper":
+                roundWinner = "user";
+                break;
+            case "scissors":
+                roundWinner = "computer";
+                break;
+        }
+    } 
+    else if (computerPlay === "paper") {
+        switch (userPlay) {
+            case "rock":
+                roundWinner = "computer";
+                break;
+            case "paper":
+                roundWinner = "tie";
+                break;
+            case "scissors":
+                roundWinner = "user";
+                break;
+        }
+    }
+    else if (computerPlay === "scissors") {
+        switch (userPlay) {
+            case "rock":
+                roundWinner = "user";
+                break;
+            case "paper":
+                roundWinner = "computer";
+                break;
+            case "scissors":
+                roundWinner = "tie";
+                break;s
+        }
+    }
+}
+
+function displayWinner() {
+    switch (roundWinner) {
+        case "user":
+            console.log("You've won this round!");
+            break;
+        case "computer":
+            console.log("You've lost this round.");
+            break;
+        case "tie":
+            console.log("It's a tie!");
+            break;
+    }
+}
+
+function updateScore() {
+    switch (roundWinner) {
+        case "user":
+            userScore += 1;
+            break;
+        case "computer":
+            computerScore += 1;
+            break;
+        case "tie":
+            break;
+    }
+}
+
+function displayRoundInfo() {
+    console.log(`The current score is: ${userScore} for you and ${computerScore} for the computer. This was round number ${currentRound}.`)
 }
