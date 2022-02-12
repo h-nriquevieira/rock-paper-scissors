@@ -186,3 +186,8 @@ function resetGame() {
     userScore = 0;
     currentRound = 1;
 }
+
+while(keepGoing) {
+    playRound();
+    checkGameStatus();
+}
