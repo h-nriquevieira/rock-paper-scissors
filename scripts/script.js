@@ -30,3 +30,41 @@ Create loop to play game
     Run rounds checker
 
 */
+
+let computerPlay;
+let userPlay;
+let computerScore;
+let userScore;
+let currentRound = 1;
+let keepGoing = true;
+
+function playRound() {
+
+    generateComputerPlay();
+}
+
+// For plays: 1 is rock, 2 is paper, 3 is scissors
+function generateComputerPlay() {
+    let num = Math.floor((Math.random() * 3)) + 1;
+    switch (num) {
+        case 1:
+            computerPlay = "rock";
+            break;
+        case 2:
+            computerPlay = "paper";
+            break;
+        case 3:
+            computerPlay = "scissors";
+            break;
+    }
+}
+
+function getUserPlay() {
+    userPlay = prompt("Enter your play:").toLowerCase();
+
+    if (userPlay !== "rock" && userPlay !== "paper" && userPlay !== "scissors") {
+        alert("Enter a valid choice! Your options are rock, paper or scissors.")
+        getUserPlay();
+    }
+  
+}
