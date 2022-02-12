@@ -51,7 +51,7 @@ function playRound() {
     currentRound += 1;
 }
 
-// For plays: 1 is rock, 2 is paper, 3 is scissors
+// START of single round mechanics
 function generateComputerPlay() {
     let num = Math.floor((Math.random() * 3)) + 1;
     switch (num) {
@@ -147,5 +147,42 @@ function updateScore() {
 }
 
 function displayRoundInfo() {
-    console.log(`The current score is: ${userScore} for you and ${computerScore} for the computer. This was round number ${currentRound}.`)
+    console.log(`The current score is: ${userScore} for you and ${computerScore} for the computer. This was round number ${currentRound}/5.`)
+}
+// END of single round mechanics
+
+function checkGameStatus() {
+    if (computerScore === 3) {
+        console.log("Game over, you lost!");
+        keepGoing = false;
+        resetGame();
+    }
+    else if (userScore === 3) {
+        console.log("Congratulations, you've won!");
+        keepGoing = false;
+        resetGame();
+    }
+    else if (currentRound === 6) {
+        if (userScore === computerScore) {
+            console.log("It's a tie! We've run out of rounds.")
+            keepGoing = false;
+            resetGame();
+        }
+        else if (userScore > computerScore) {
+            console.log("We've run out of rounds, but you won!");
+            keepGoing = false;
+            resetGame();
+        }
+        else {
+            console.log("You've lost! We've run out of rounds.")
+            keepGoing = False;
+            resetGame();
+        }
+    }
+}
+
+function resetGame() {
+    computerScore = 0;
+    userScore = 0;
+    currentRound = 1;
 }
