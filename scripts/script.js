@@ -193,6 +193,7 @@ function resetGame() {
     currentRound = 1;
     displayComputerScore.textContent = 0;
     displayUserScore.textContent = 0;
+    displayRounds.textContent = "0/5";
     results.textContent = "Choose an option to start the game";
 }
 
