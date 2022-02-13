@@ -198,5 +198,8 @@ function startRound() {
     playRound(this.getAttribute('data-choice'));
 }
 
-const buttons = document.querySelectorAll("button");
+const buttons = document.querySelectorAll(".play-button");
 buttons.forEach(button => {button.addEventListener('click', startRound)});
+
+const reset = document.querySelector('.reset');
+reset.addEventListener('click', resetGame);
