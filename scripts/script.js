@@ -46,18 +46,15 @@ function playRound(choice) {
     let roundWinner;
     
     generateComputerPlay();
-    //getUserPlay();
     userPlay = choice;
     comparePlays();
     displayWinner();
     updateScore();
-    //displayRoundInfo();
     currentRound += 1;
     updateRoundNumber();
     checkGameStatus();
 }
 
-// START of single round mechanics
 function generateComputerPlay() {
     let num = Math.floor((Math.random() * 3)) + 1;
     switch (num) {
@@ -71,16 +68,6 @@ function generateComputerPlay() {
             computerPlay = "scissors";
             break;
     }
-}
-
-function getUserPlay() {
-    userPlay = prompt("Enter your play:").toLowerCase();
-
-    if (userPlay !== "rock" && userPlay !== "paper" && userPlay !== "scissors") {
-        alert("Enter a valid choice! Your options are rock, paper or scissors.")
-        getUserPlay();
-    }
-  
 }
 
 function comparePlays() {
@@ -154,14 +141,9 @@ function updateScore() {
     }
 }
 
-function displayRoundInfo() {
-    results.textContent = ` The current score is: ${userScore} for you and ${computerScore} for the computer. This was round number ${currentRound}/5.`;
-}
-
 function updateRoundNumber() {
     displayRounds.textContent = (currentRound - 1) + "/5";
 }
-// END of single round mechanics
 
 function checkGameStatus() {
     if (computerScore === 3) {
@@ -195,11 +177,6 @@ function resetGame() {
     displayUserScore.textContent = 0;
     displayRounds.textContent = "0/5";
     results.textContent = "Choose an option to start the game";
-}
-
-while(keepGoing) {
-    playRound();
-    checkGameStatus();
 }
 
 function startRound() {
