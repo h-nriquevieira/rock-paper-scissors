@@ -37,7 +37,10 @@ let computerScore = 0;
 let userScore = 0;
 let currentRound = 1;
 let keepGoing = false;
-const results = document.querySelector('.results');
+const results = document.querySelector('.narrator>p');
+const displayUserScore = document.querySelector('.user-score-number');
+const displayComputerScore = document.querySelector('.computer-score-number');
+const displayRounds = document.querySelector('.rounds-number');
 
 function playRound(choice) {
     let roundWinner;
@@ -48,8 +51,9 @@ function playRound(choice) {
     comparePlays();
     displayWinner();
     updateScore();
-    displayRoundInfo();
+    //displayRoundInfo();
     currentRound += 1;
+    updateRoundNumber();
     checkGameStatus();
 }
 
@@ -139,9 +143,11 @@ function updateScore() {
     switch (roundWinner) {
         case "user":
             userScore += 1;
+            displayUserScore.textContent = userScore;
             break;
         case "computer":
             computerScore += 1;
+            displayComputerScore.textContent = computerScore;
             break;
         case "tie":
             break;
@@ -149,36 +155,34 @@ function updateScore() {
 }
 
 function displayRoundInfo() {
-    results.textContent += ` The current score is: ${userScore} for you and ${computerScore} for the computer. This was round number ${currentRound}/5.`;
+    results.textContent = ` The current score is: ${userScore} for you and ${computerScore} for the computer. This was round number ${currentRound}/5.`;
+}
+
+function updateRoundNumber() {
+    displayRounds.textContent = (currentRound - 1) + "/5";
 }
 // END of single round mechanics
 
 function checkGameStatus() {
     if (computerScore === 3) {
         results.textContent = "Game over, you lost!";
-        keepGoing = false;
-        resetGame();
+    
     }
     else if (userScore === 3) {
         results.textContent = "Congratulations, you've won!";
-        keepGoing = false;
-        resetGame();
+    
     }
     else if (currentRound === 6) {
         if (userScore === computerScore) {
             results.textContent = "It's a tie! We've run out of rounds.";
-            keepGoing = false;
-            resetGame();
         }
         else if (userScore > computerScore) {
             results.textContent = "We've run out of rounds, but you won!";
-            keepGoing = false;
-            resetGame();
+            
         }
         else {
             results.textContent = "You've lost! We've run out of rounds."
-            keepGoing = false;
-            resetGame();
+            
         }
     }
 }
@@ -187,6 +191,9 @@ function resetGame() {
     computerScore = 0;
     userScore = 0;
     currentRound = 1;
+    displayComputerScore.textContent = 0;
+    displayUserScore.textContent = 0;
+    results.textContent = "Choose an option to start the game";
 }
 
 while(keepGoing) {
@@ -195,6 +202,7 @@ while(keepGoing) {
 }
 
 function startRound() {
+    if (currentRound === 6) resetGame();
     playRound(this.getAttribute('data-choice'));
 }
 
