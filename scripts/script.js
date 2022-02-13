@@ -31,24 +31,26 @@ Create loop to play game
     Run rounds checker
 
 */
-
 let computerPlay;
 let userPlay;
 let computerScore = 0;
 let userScore = 0;
 let currentRound = 1;
-let keepGoing = true;
+let keepGoing = false;
+const results = document.querySelector('.results');
 
-function playRound() {
+function playRound(choice) {
     let roundWinner;
     
     generateComputerPlay();
-    getUserPlay();
+    //getUserPlay();
+    userPlay = choice;
     comparePlays();
     displayWinner();
     updateScore();
     displayRoundInfo();
     currentRound += 1;
+    checkGameStatus();
 }
 
 // START of single round mechanics
@@ -122,13 +124,13 @@ function comparePlays() {
 function displayWinner() {
     switch (roundWinner) {
         case "user":
-            console.log("You've won this round!");
+            results.textContent = "You've won this round!";
             break;
         case "computer":
-            console.log("You've lost this round.");
+            results.textContent = "You've lost this round.";
             break;
         case "tie":
-            console.log("It's a tie!");
+            results.textContent = "It's a tie!";
             break;
     }
 }
@@ -147,35 +149,35 @@ function updateScore() {
 }
 
 function displayRoundInfo() {
-    console.log(`The current score is: ${userScore} for you and ${computerScore} for the computer. This was round number ${currentRound}/5.`)
+    results.textContent += ` The current score is: ${userScore} for you and ${computerScore} for the computer. This was round number ${currentRound}/5.`;
 }
 // END of single round mechanics
 
 function checkGameStatus() {
     if (computerScore === 3) {
-        console.log("Game over, you lost!");
+        results.textContent = "Game over, you lost!";
         keepGoing = false;
         resetGame();
     }
     else if (userScore === 3) {
-        console.log("Congratulations, you've won!");
+        results.textContent = "Congratulations, you've won!";
         keepGoing = false;
         resetGame();
     }
     else if (currentRound === 6) {
         if (userScore === computerScore) {
-            console.log("It's a tie! We've run out of rounds.")
+            results.textContent = "It's a tie! We've run out of rounds.";
             keepGoing = false;
             resetGame();
         }
         else if (userScore > computerScore) {
-            console.log("We've run out of rounds, but you won!");
+            results.textContent = "We've run out of rounds, but you won!";
             keepGoing = false;
             resetGame();
         }
         else {
-            console.log("You've lost! We've run out of rounds.")
-            keepGoing = False;
+            results.textContent = "You've lost! We've run out of rounds."
+            keepGoing = false;
             resetGame();
         }
     }
@@ -191,3 +193,10 @@ while(keepGoing) {
     playRound();
     checkGameStatus();
 }
+
+function startRound() {
+    playRound(this.getAttribute('data-choice'));
+}
+
+const buttons = document.querySelectorAll("button");
+buttons.forEach(button => {button.addEventListener('click', startRound)});
